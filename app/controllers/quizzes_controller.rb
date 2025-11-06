@@ -118,7 +118,7 @@ class QuizzesController < ApplicationController
   private
 
   def find_quiz
-    @quiz = Quiz.find_by(session_id: params[:id] || params[:quiz_id])
+    @quiz = Quiz.find_by(id: params[:id] || params[:quiz_id])
     unless @quiz
       redirect_to root_path, alert: 'Quiz not found'
     end
