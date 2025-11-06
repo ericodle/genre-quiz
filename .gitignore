@@ -41,3 +41,13 @@ yarn-debug.log*
 # Ignore Docker volumes
 postgres_data/
 
+# Ignore audio files
+*.mp3
+*.wav
+*.flac
+*.m4a
+*.aac
+*.ogg
+audio/
+**/audio/
+
