@@ -1,0 +1,65 @@
+<div class="quiz-results">
+  <h2>Quiz Results</h2>
+
+  <div class="results-summary">
+    <div class="summary-card">
+      <h3>Overall Performance</h3>
+      <div class="score-display">
+        <div class="score-number"><%= @total_correct %> / <%= @total_questions %></div>
+        <div class="score-percentage"><%= number_with_precision(@accuracy, precision: 1) %>%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-by-genre">
+    <h3>Performance by Genre</h3>
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Genre</th>
+          <th>Correct</th>
+          <th>Total</th>
+          <th>Accuracy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @results_by_genre.each do |result| %>
+          <tr>
+            <td><%= result[:genre] %></td>
+            <td><%= result[:correct] %></td>
+            <td><%= result[:total] %></td>
+            <td><%= number_with_precision(result[:accuracy], precision: 1) %>%</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="detailed-results">
+    <h3>Question Details</h3>
+    <div class="questions-list">
+      <% @questions.each do |question| %>
+        <div class="question-result <%= question.answer&.is_correct ? 'correct' : 'incorrect' %>">
+          <div class="question-header">
+            <span class="question-number">Q<%= question.question_number %></span>
+            <span class="question-status">
+              <%= question.answer&.is_correct ? '✓ Correct' : '✗ Incorrect' %>
+            </span>
+          </div>
+          <div class="question-details">
+            <p><strong>Your answer:</strong> <%= question.answer&.selected_genre %></p>
+            <p><strong>Correct answer:</strong> <%= question.song.genre %></p>
+            <% if question.time_spent_seconds %>
+              <p><strong>Time spent:</strong> <%= number_with_precision(question.time_spent_seconds, precision: 1) %> seconds</p>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="results-actions">
+    <%= link_to "Start New Quiz", root_path, class: "btn btn-primary" %>
+  </div>
+</div>
+

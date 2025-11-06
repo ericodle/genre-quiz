@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: genre_quiz_development
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3003 -b '0.0.0.0'"
+    volumes:
+      - .:/app
+      - /home/eo/MGRP/fma-data/splits/test:/app/audio/fma-test:ro
+      - /home/eo/MGRP/gtzan-data/splits/test:/app/audio/gtzan-test:ro
+    ports:
+      - "3003:3003"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/genre_quiz_development
+      RAILS_ENV: development
+      AUDIO_FMA_BASE_PATH: /app/audio/fma-test
+      AUDIO_GTZAN_BASE_PATH: /app/audio/gtzan-test
+    depends_on:
+      db:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:
+

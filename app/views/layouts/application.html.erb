@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Music Genre Quiz</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <h1>Music Genre Classification Quiz</h1>
+        <p class="subtitle">Test your ability to identify musical genres</p>
+      </header>
+
+      <% if flash[:alert] %>
+        <div class="alert alert-error">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <% if flash[:notice] %>
+        <div class="alert alert-success">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+
+      <main>
+        <%= yield %>
+      </main>
+
+      <footer>
+        <p>Music Genre Quiz - Research Project</p>
+      </footer>
+    </div>
+  </body>
+</html>
+

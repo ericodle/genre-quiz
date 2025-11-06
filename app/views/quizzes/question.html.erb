@@ -1,0 +1,49 @@
+<div class="quiz-question">
+  <div class="quiz-progress">
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: <%= @progress %>%"></div>
+    </div>
+    <p class="progress-text">Question <%= @current_number %> of <%= @total_questions %></p>
+  </div>
+
+  <div class="question-content">
+    <h2>Listen to the audio clip and select the genre:</h2>
+
+    <div class="audio-player-container">
+      <audio id="audio-player" controls preload="auto">
+        <source src="<%= audio_serve_path(dataset: @quiz.dataset.name.downcase, genre: @song.genre, filename: @song.filename) %>" type="<%= @song.filename.downcase.end_with?('.mp3') ? 'audio/mpeg' : 'audio/wav' %>">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+    <%= form_with url: answer_quiz_path(@quiz, question_number: @question.question_number), method: :post, local: true, class: "answer-form" do |form| %>
+      <div class="genre-selection">
+        <h3>Select Genre:</h3>
+        <div class="genre-options">
+          <% @genres.each do |genre| %>
+            <label class="genre-option">
+              <%= form.radio_button :selected_genre, genre, required: true, class: "genre-radio" %>
+              <span class="genre-label"><%= genre %></span>
+            </label>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= form.submit "Submit Answer", class: "btn btn-primary btn-large" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  // Auto-play audio when page loads (optional)
+  document.addEventListener('DOMContentLoaded', function() {
+    const audioPlayer = document.getElementById('audio-player');
+    if (audioPlayer) {
+      // Uncomment to auto-play:
+      // audioPlayer.play().catch(e => console.log('Auto-play prevented:', e));
+    }
+  });
+</script>
+
