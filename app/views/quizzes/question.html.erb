@@ -3,11 +3,11 @@
     <div class="progress-bar">
       <div class="progress-fill" style="width: <%= @progress %>%"></div>
     </div>
-    <p class="progress-text">Question <%= @current_number %> of <%= @total_questions %></p>
+    <p class="progress-text">Question <%= @current_number %> of <%= @total_questions %><br>問題 <%= @current_number %> / <%= @total_questions %></p>
   </div>
 
   <div class="question-content">
-    <h2>Listen to the audio clip and select the genre:</h2>
+    <h2>Listen to the audio clip and select the genre:<br><span style="font-size: 0.7em; font-weight: 400;">聆聽音訊片段並選擇類型：</span></h2>
 
     <div class="audio-player-container">
       <audio id="audio-player" controls preload="auto">
@@ -18,19 +18,19 @@
 
     <%= form_with url: answer_quiz_path(@quiz, question_number: @question.question_number), method: :post, local: true, class: "answer-form" do |form| %>
       <div class="genre-selection">
-        <h3>Select Genre:</h3>
+        <h3>Select Genre / 選擇類型:</h3>
         <div class="genre-options">
           <% @genres.each do |genre| %>
             <label class="genre-option">
               <%= form.radio_button :selected_genre, genre, required: true, class: "genre-radio" %>
-              <span class="genre-label"><%= genre %></span>
+              <span class="genre-label"><%= genre_with_chinese(genre) %></span>
             </label>
           <% end %>
         </div>
       </div>
 
       <div class="form-actions">
-        <%= form.submit "Submit Answer", class: "btn btn-primary btn-large" %>
+        <%= form.submit "Submit Answer / 提交答案", class: "btn btn-primary btn-large" %>
       </div>
     <% end %>
   </div>

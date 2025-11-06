@@ -1,50 +1,51 @@
 <div class="quiz-start">
-  <h2>Start a New Quiz</h2>
+  <h2>Start a New Quiz<br><span style="font-size: 0.7em; font-weight: 400;">開始新測驗</span></h2>
   
-  <p>Please provide your information and select a dataset. You will be quizzed on all songs in the test set, presented in random order.</p>
+  <p>Please provide your information and select a dataset. You will be quizzed on all songs in the test set, presented in random order.<br>請提供您的資訊並選擇資料集。您將接受測試集中所有歌曲的測驗，以隨機順序呈現。</p>
 
   <%= form_with url: quizzes_path, method: :post, local: true, class: "quiz-form" do |form| %>
-    <h3>Your Information</h3>
+    <h3>Your Information<br><span style="font-size: 0.8em; font-weight: 400;">您的資訊</span></h3>
     
     <div class="form-group">
-      <%= form.label :name, "Name:", class: "form-label" %>
+      <%= form.label :name, "Name / 姓名:", class: "form-label" %>
       <%= form.text_field :name, class: "form-input", required: true %>
     </div>
 
     <div class="form-group">
-      <%= form.label :age, "Age:", class: "form-label" %>
+      <%= form.label :age, "Age / 年齡:", class: "form-label" %>
       <%= form.number_field :age, class: "form-input", min: 1, max: 150 %>
     </div>
 
     <div class="form-group">
-      <%= form.label :nationality, "Nationality:", class: "form-label" %>
+      <%= form.label :nationality, "Nationality / 國籍:", class: "form-label" %>
       <%= form.text_field :nationality, class: "form-input" %>
     </div>
 
     <div class="form-group">
-      <%= form.label :date_of_test, "Date of Test:", class: "form-label" %>
+      <%= form.label :date_of_test, "Date of Test / 測試日期:", class: "form-label" %>
       <%= form.date_field :date_of_test, value: Date.today, class: "form-input", required: true %>
     </div>
 
     <div class="form-group">
-      <%= form.label :email, "Email:", class: "form-label" %>
+      <%= form.label :email, "Email / 電子郵件:", class: "form-label" %>
       <%= form.email_field :email, class: "form-input" %>
     </div>
 
-    <h3>Dataset Selection</h3>
+    <h3>Dataset Selection<br><span style="font-size: 0.8em; font-weight: 400;">資料集選擇</span></h3>
 
     <div class="form-group">
-      <%= form.label :dataset_id, "Dataset:", class: "form-label" %>
+      <%= form.label :dataset_id, "Dataset / 資料集:", class: "form-label" %>
       <%= form.collection_select :dataset_id, @datasets, :id, :name, 
-          { prompt: "Select a dataset" }, 
+          { prompt: "Select a dataset / 選擇資料集" }, 
           { class: "form-select", required: true } %>
       <small class="form-text">
-        FMA: 16 genres, ~2,490 test songs | GTZAN: 10 genres, 160 test songs
+        FMA: 16 genres, ~2,490 test songs | GTZAN: 10 genres, 160 test songs<br>
+        FMA: 16 種類型，約 2,490 首測試歌曲 | GTZAN: 10 種類型，160 首測試歌曲
       </small>
     </div>
 
     <div class="form-actions">
-      <%= form.submit "Start Quiz", class: "btn btn-primary" %>
+      <%= form.submit "Start Quiz / 開始測驗", class: "btn btn-primary" %>
     </div>
   <% end %>
 </div>
